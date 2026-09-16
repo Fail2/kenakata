@@ -17,6 +17,7 @@ export default function ProductFilters({
 }: ProductFiltersProps) {
     const [search, setSearch] = useState("");
     const [categoryId, setCategoryId] = useState("");
+    const [sort, setSort] = useState("");
 
     const [debouncedSearch, setDebouncedSearch] = useState("");
 
@@ -40,10 +41,26 @@ export default function ProductFilters({
         });
     }, [products, debouncedSearch, categoryId])
 
+    const sortedProducts = useMemo(() => {
+        const result = [...filteredProducts]
+
+        switch (sort) {
+            case "price-asc":
+                return result.sort((a, b) => a.price - b.price);
+            case "price-desc":
+                return result.sort((a, b) => b.price - a.price);
+            case "name-asc":
+                return result.sort((a, b) => a.title.localeCompare(b.title));
+            case "name-desc":
+                return result.sort((a, b) => b.title.localeCompare(a.title));
+            default:
+                return result;
+        }
+    }, [filteredProducts, sort]);
 
     return (
         <div>
-            <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
+            <div className="grid gap-4 sm:grid-cols-[1fr_auto_auto]">
                 <div>
                     <label htmlFor="product-search"
                         className="mb-2 block text-sm font-medium text-gray-700"
@@ -57,7 +74,7 @@ export default function ProductFilters({
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
                         placeholder="Search products..."
-                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:border-black focus:ring-1 focus:ring-black"
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transition focus:ring-1 focus:ring-black"
                     />
                 </div>
 
@@ -72,8 +89,8 @@ export default function ProductFilters({
                         id="product-category"
                         value={categoryId}
                         onChange={(event) => setCategoryId(event.target.value)}
-                        className="h-12 w-full text-black rounded-lg border border-gray-300 bg-white px-4
-                    outline-none transition focus:border-black focus:ring-1 focus:ring-black sm:min-w-56"
+                        className="h-12 w-full text- rounded-lg border border-gray-300 bg-black px-4
+                    outline-none transition sm:min-w-56"
                     >
                         <option value="">All Categories</option>
                         {categories.map((category) => (
@@ -81,11 +98,33 @@ export default function ProductFilters({
                         ))}
                     </select>
                 </div>
+
+                <div>
+                    <label
+                        htmlFor="product-sort"
+                        className="mb-2 block text-sm font-medium text-gray-700"
+                    >
+                        Sort by
+                    </label>
+
+                    <select
+                        id="product-sort"
+                        value={sort}
+                        onChange={(even) => setSort(even.target.value)}
+                        className="h-12 w-full rounded-lg border border-gray-300 bg-black px-4 outline-none transision md:min-w-52">
+                        <option value="">Default</option>
+                        <option value="price-asc">Price : Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+                </div>
+
             </div>
 
-            {filteredProducts.length > 0 ? (
+            {sortedProducts.length > 0 ? (
                 <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {filteredProducts.map((product) => (
+                    {sortedProducts.map((product) => (
                         <ProductCard key={product.id}
                             product={product}
                         />
