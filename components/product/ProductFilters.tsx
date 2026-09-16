@@ -175,11 +175,18 @@ export default function ProductFilters({
                     ))}
                 </div>
             ) : (
-                <div className="py-20 text-center">
-                    <h2 className="text-xl font-semibold">No Products found</h2>
+                <div className="flex min-h-80 flex-col items-center justify-center text-center">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 text-2xl">
+                        🔍
+                    </div>
 
-                    <p className="mt-2 text-sm text-gray-500">
-                        Try changing your search or category.
+                    <h2 className="mt-5 text-xl font-semibold">
+                        No products found
+                    </h2>
+
+                    <p className="mt-2 max-w-md text-sm text-gray-500">
+                        We couldn't find any products matching your search or
+                        selected category.
                     </p>
                 </div>
             )}
@@ -191,7 +198,10 @@ export default function ProductFilters({
                         className="flex min-h-24 items-center justify-center"
                     >
                         {isLoadingMore && (
-                            <p className="text-sm text-gray-500">Loading more products....</p>
+                            <div className="flex items-center gap-2 text-sm text-gray-500">
+                                <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-black" />
+                                <span>Loading more products...</span>
+                            </div>
                         )}
 
                     </div>
