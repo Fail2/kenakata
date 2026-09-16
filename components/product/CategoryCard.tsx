@@ -14,10 +14,9 @@ export default function CategoryCard({ category }: CategoryCardProps) {
             className="group overflow-hidden rounded-xl bg-white"
         >
             <div className="relative aspect-video overflow-hidden bg-gray-100">
-                <Image
+                <img
                     src={category.image}
                     alt={category.name}
-                    fill
                     className="object-cover block transition duration-300 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, 50vw"
                 />

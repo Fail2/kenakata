@@ -12,10 +12,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <article className="group overlflow-hidden rounded-xl bg-white">
             <Link href={`/products/${product.id}`}>
                 <div className="relative aspect-square rounded-t-xl overflow-hidden bg-gray-100">
-                    <Image
-                        src={product.images[0]}
+                    <img
+                        src={product.images[0] || '/image/product-fallback.jpg'}
                         alt={product.title}
-                        fill
                         className="object-cover block transition duration-300 group-hover:scale-105"
                         sizes="(max-width:640px) 100vw, (max-width: 1024)50vw, 25vw"
                     />
