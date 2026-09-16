@@ -9,14 +9,14 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
     return (
-        <article className="group overlflow-hidden rounded-xl border bg-white">
+        <article className="group overlflow-hidden rounded-xl bg-white">
             <Link href={`/products/${product.id}`}>
-                <div className="relative aspect-square overflow-hidden bg-gray-100">
+                <div className="relative aspect-square rounded-t-xl overflow-hidden bg-gray-100">
                     <Image
                         src={product.images[0]}
                         alt={product.title}
                         fill
-                        className="object-cover transition duration-300 group-hover:scale-105"
+                        className="object-cover block transition duration-300 group-hover:scale-105"
                         sizes="(max-width:640px) 100vw, (max-width: 1024)50vw, 25vw"
                     />
                 </div>
@@ -25,11 +25,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                         {product.category.name}
                     </p>
 
-                    <h3 className="mt-1 line-clamp-2 font-semibold">
+                    <h3 className="mt-1 line-clamp-2 font-semibold text-black">
                         {product.title}
                     </h3>
 
-                    <p className="mt-3 text-lg font-bold">
+                    <p className="mt-3 text-lg font-bold text-blue-950">
                         ${product.price}
                     </p>
                 </div>
