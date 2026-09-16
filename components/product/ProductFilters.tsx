@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
@@ -21,6 +21,11 @@ export default function ProductFilters({
 
     const [debouncedSearch, setDebouncedSearch] = useState("");
 
+    const [visibleCount, setVisibleCount] = useState(8);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearch(search);
@@ -28,6 +33,10 @@ export default function ProductFilters({
 
         return () => clearTimeout(timer);
     }, [search]);
+
+    useEffect(() => {
+        setVisibleCount(8);
+    }, [debouncedSearch, categoryId, sort]);
 
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
@@ -57,6 +66,41 @@ export default function ProductFilters({
                 return result;
         }
     }, [filteredProducts, sort]);
+
+    const visibleProducts = sortedProducts.slice(0, visibleCount);
+
+    const hasMore = visibleCount < sortedProducts.length;
+
+    useEffect(() => {
+        const element = loadMoreRef.current;
+
+        if (!element || !hasMore) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (!entries[0].isIntersecting || isLoadingMore) {
+                    return;
+                }
+
+                setIsLoadingMore(true);
+
+                setTimeout(() => {
+                    setVisibleCount((count) =>
+                        Math.min(count + 8, sortedProducts.length)
+                    );
+
+                    setIsLoadingMore(false);
+                }, 500);
+            },
+            {
+                rootMargin: "200px",
+            }
+        );
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, [hasMore, isLoadingMore, sortedProducts.length])
 
     return (
         <div>
@@ -122,9 +166,9 @@ export default function ProductFilters({
 
             </div>
 
-            {sortedProducts.length > 0 ? (
+            {visibleProducts.length > 0 ? (
                 <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {sortedProducts.map((product) => (
+                    {visibleProducts.map((product) => (
                         <ProductCard key={product.id}
                             product={product}
                         />
@@ -138,10 +182,29 @@ export default function ProductFilters({
                         Try changing your search or category.
                     </p>
                 </div>
-
-
             )}
 
+            {
+                hasMore && (
+                    <div
+                        ref={loadMoreRef}
+                        className="flex min-h-24 items-center justify-center"
+                    >
+                        {isLoadingMore && (
+                            <p className="text-sm text-gray-500">Loading more products....</p>
+                        )}
+
+                    </div>
+                )
+            }
+            {
+                !hasMore && sortedProducts.length > 0 && (
+                    <p className="mt-10 text-center text-sm text-gray-500">
+                        You've reached the end.
+                    </p>
+                )
+            }
         </div>
+
     )
 }
