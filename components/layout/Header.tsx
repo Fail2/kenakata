@@ -1,9 +1,13 @@
 "use client";
 
-import { useCart } from "@/store/cart.store"; import Link from "next/link";
+import Link from "next/link";
+import { useAuth } from "@/store/auth.store";
+import { useCart } from "@/store/cart.store";
 
 export default function Header() {
     const { cartCount, openCart } = useCart();
+    const { isAuthenticated, logout } = useAuth();
+
     return (
         <header className="border-b sticky top-0 z-40 bg-white shadow-sm">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
@@ -35,7 +39,22 @@ export default function Header() {
                             )}
                         </span>
                     </button>
-                    <Link href="/login">Login</Link>
+                    {isAuthenticated ? (
+                        <button
+                            type="button"
+                            onClick={logout}
+                            className="rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-black shadow-sm transition hover:border-black hover:bg-black hover:text-white"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <Link
+                            href="/login"
+                            className="rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-800"
+                        >
+                            Login
+                        </Link>
+                    )}
 
                 </nav>
             </div>
