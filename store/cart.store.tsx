@@ -9,7 +9,7 @@ import { totalmem } from "os";
 
 export interface CartItem {
     product: Product;
-    quanity: number;
+    quantity: number;
 }
 
 interface CartContextType {
@@ -89,11 +89,11 @@ export function CartProvider({
     }
 
     const cartCount = items.reduce(
-        (total, item) => total + item.quanity, 0
+        (total, item) => total + item.quantity, 0
     );
 
     const cartTotal = items.reduce(
-        (total, item) => total + item.product.price * item.quanity, 0
+        (total, item) => total + item.product.price * item.quantity, 0
     )
 
     return (
