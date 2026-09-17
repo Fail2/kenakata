@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { Product } from "@/types/product";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductCardProps {
     product: Product;
@@ -9,7 +10,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
     return (
-        <article className="group overlflow-hidden rounded-xl bg-white">
+        <article className="group overflow-hidden rounded-xl bg-white">
             <Link href={`/products/${product.id}`}>
                 <div className="relative aspect-square rounded-t-xl overflow-hidden bg-gray-100">
                     <img
@@ -33,6 +34,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                     </p>
                 </div>
             </Link>
+            <AddToCartButton product={product} />
+
         </article>
     )
 }
