@@ -8,7 +8,7 @@ export default function Header() {
 
                 <nav className="flex items-center gap-6">
                     <Link href="/">Home</Link>
-                    <Link href="/products">products</Link>
+                    <Link href="/products">Products</Link>
                     <Link href="/cart">Cart</Link>
                     <Link href="/login">Login</Link>
 
