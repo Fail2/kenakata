@@ -1,7 +1,10 @@
 "use client";
 
 import {
-    createContext, useContext, useEffect, useState,
+    createContext,
+    useContext,
+    useEffect,
+    useState,
 } from "react";
 
 interface AuthContextType {
@@ -45,8 +48,7 @@ export function AuthProvider({
                 isAuthenticated: Boolean(token),
                 login,
                 logout,
-            }
-            }
+            }}
         >
             {children}
         </AuthContext.Provider>
