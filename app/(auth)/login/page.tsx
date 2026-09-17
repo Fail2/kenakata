@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,10 @@ import { loginSchema, type LoginFormData, } from "@/lib/validations";
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { login } = useAuth();
+
+    const redirectPath = searchParams.get("redirect") || "/";
 
     const [serverError, setServerError] = useState("");
 
@@ -26,7 +29,7 @@ export default function LoginPage() {
 
             login(response.access_token, response.refresh_token);
 
-            router.push("/");
+            router.push(redirectPath);
         } catch {
             setServerError(
                 "Invalid email or password. Please try again."

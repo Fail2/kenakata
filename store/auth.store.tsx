@@ -1,11 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, } from "react";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 
 interface AuthContextType {
     accessToken: string | null;
     refreshToken: string | null;
     isAuthenticated: boolean;
+    isLoading: boolean;
     login: (accessToken: string, refreshToken: string) => void;
     logout: () => void;
 }
@@ -19,6 +25,7 @@ export function AuthProvider({
 }) {
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [refreshToken, setRefreshToken] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const savedAccessToken = localStorage.getItem(
@@ -36,6 +43,8 @@ export function AuthProvider({
         if (savedRefreshToken) {
             setRefreshToken(savedRefreshToken);
         }
+
+        setIsLoading(false);
     }, []);
 
     function login(
@@ -70,6 +79,7 @@ export function AuthProvider({
                 accessToken,
                 refreshToken,
                 isAuthenticated: Boolean(accessToken),
+                isLoading,
                 login,
                 logout,
             }}

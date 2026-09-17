@@ -1,15 +1,25 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "@/store/cart.store";
 import { checkoutSchema, type CheckoutFormData, } from "@/lib/validations";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/store/auth.store";
 import Link from "next/link";
 
 export default function CheckoutPage() {
+    const router = useRouter();
+    const { isAuthenticated, isLoading } = useAuth();
     const { items, cartTotal, clearCart } = useCart();
     const [orderPlaced, setOrderPlaced] = useState(false);
+
+    useEffect(() => {
+        if (!isLoading && !isAuthenticated) {
+            router.replace("/login?redirect=/checkout");
+        }
+    }, [isAuthenticated, isLoading, router]);
 
     const {
         register,
@@ -18,6 +28,14 @@ export default function CheckoutPage() {
     } = useForm<CheckoutFormData>({
         resolver: zodResolver(checkoutSchema),
     });
+
+    if (isLoading) {
+        return null;
+    }
+
+    if (!isAuthenticated) {
+        return null;
+    }
 
     function onSubmit(data: CheckoutFormData) {
         console.log("Order placed:", data);
