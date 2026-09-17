@@ -8,3 +8,19 @@ export async function getUsers(): Promise<User[]> {
 export async function getUser(id: string): Promise<User> {
     return api<User>(`/users/${id}`);
 }
+
+interface CreateUserData {
+    name: string;
+    email: string;
+    password: string;
+    avatar: string;
+}
+
+export async function createUser(
+    data: CreateUserData
+): Promise<User> {
+    return api<User>("/users", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
+}
