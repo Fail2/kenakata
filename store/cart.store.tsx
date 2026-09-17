@@ -2,10 +2,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import type { Product } from "@/types/product";
-import { json } from "stream/consumers";
-import { Crushed } from "next/font/google";
-import { cursorTo } from "readline";
-import { totalmem } from "os";
 
 export interface CartItem {
     product: Product;
@@ -59,7 +55,7 @@ export function CartProvider({
                 ...currentItems,
                 {
                     product,
-                    quanity: 1,
+                    quantity: 1,
                 },
             ];
         });
@@ -68,7 +64,7 @@ export function CartProvider({
 
     function removeFromCart(productId: number) {
         setItems((currentItems) =>
-            currentItems.filter((item) => item.product.id! == productId));
+            currentItems.filter((item) => item.product.id !== productId));
     }
 
     function updateQuantity(

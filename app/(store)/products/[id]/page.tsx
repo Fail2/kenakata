@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/product/AddToCartButton";
 import ProductCard from "@/components/product/ProductCard";
 import ProductGallery from "@/components/product/ProductGallery";
 import { getProduct, getProducts } from "@/services/product.service";
@@ -58,12 +59,7 @@ export default async function ProductDetailsPage({
                         </p>
                     </div>
 
-                    <button
-                        type="button"
-                        className="mt-8 w-full rounded-xl bg-black px-6 py-4 font-semibold text-white transition hover:bg-gray-800 sm:w-auto"
-                    >
-                        Add to Cart
-                    </button>
+                    <AddToCartButton product={product} />
                 </div>
             </div>
 
