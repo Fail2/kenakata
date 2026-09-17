@@ -19,6 +19,7 @@ interface CartContextType {
     isCartOpen: boolean;
     openCart: () => void;
     closeCart: () => void;
+    clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -84,6 +85,10 @@ export function CartProvider({
         return items.some((item) => item.product.id === productId);
     }
 
+    function clearCart() {
+        setItems([]);
+    }
+
     const cartCount = items.reduce(
         (total, item) => total + item.quantity, 0
     );
@@ -105,6 +110,7 @@ export function CartProvider({
                 isCartOpen,
                 openCart: () => setIsCartOpen(true),
                 closeCart: () => setIsCartOpen(false),
+                clearCart,
             }}
         >
             {children}

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const checkoutSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
     email: z.string().email("Please enter a valid email address"),
-    phone: z.string().min(11, "Phone number must be at least 11 characters"),
+    phone: z.string().regex(/^\d+$/, "Phone number must contain only numbers").min(11, "Phone number must be at least 11 characters"),
     address: z.string().min(10, "Address must be at least 10 characters"),
 });
 
