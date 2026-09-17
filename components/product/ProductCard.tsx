@@ -10,7 +10,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
     return (
-        <article className="group overflow-hidden rounded-xl bg-white">
+        <article className="group overflow-hidden rounded-xl bg-white flex flex-col">
             <Link href={`/products/${product.id}`}>
                 <div className="relative aspect-square rounded-t-xl overflow-hidden bg-gray-100">
                     <img
@@ -34,7 +34,10 @@ export default function ProductCard({ product }: ProductCardProps) {
                     </p>
                 </div>
             </Link>
-            <AddToCartButton product={product} />
+            <div className="mt-auto">
+                <AddToCartButton product={product} />
+            </div>
+
 
         </article>
     )

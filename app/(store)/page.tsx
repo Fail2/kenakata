@@ -15,10 +15,10 @@ export default async function HomePage() {
             <section className="">
                 <div className="mx-auto max-w-7xl px-4 py-24" style={{ backgroundImage: "url('/images/Hero-Banner 1.jpg')" }}>
                     <div className="max-w-2xl">
-                        <p className="mb-4 text-sm font-semibold uppercase tracking-wider">
+                        <p className="mb-4 text-sm text-white font-semibold uppercase tracking-wider">
                             Welcome to KENAKATA
                         </p>
-                        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl"> Discover products you'll love.</h1>
+                        <h1 className="text-4xl text-white font-bold tracking-tight sm:text-6xl"> Discover products you'll love.</h1>
                         <p className="mt-6 text-lg text-gray-600">
                             Find quality products at great prices, all in one place.
                         </p>

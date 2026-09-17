@@ -5,7 +5,7 @@ import { useCart } from "@/store/cart.store"; import Link from "next/link";
 export default function Header() {
     const { cartCount, openCart } = useCart();
     return (
-        <header className="border-b">
+        <header className="border-b sticky top-0 z-40 bg-white shadow-sm">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
                 <Link href="/" className="text-2xl font-bold">KENAKATA</Link>
 

@@ -133,7 +133,7 @@ export default function ProductFilters({
                         id="product-category"
                         value={categoryId}
                         onChange={(event) => setCategoryId(event.target.value)}
-                        className="h-12 w-full text- rounded-lg border border-gray-300 bg-black px-4
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4
                     outline-none transition sm:min-w-56"
                     >
                         <option value="">All Categories</option>
@@ -155,7 +155,7 @@ export default function ProductFilters({
                         id="product-sort"
                         value={sort}
                         onChange={(even) => setSort(even.target.value)}
-                        className="h-12 w-full rounded-lg border border-gray-300 bg-black px-4 outline-none transision md:min-w-52">
+                        className="h-12 w-full rounded-lg border border-gray-300 px-4 outline-none transision md:min-w-52">
                         <option value="">Default</option>
                         <option value="price-asc">Price : Low to High</option>
                         <option value="price-desc">Price: High to Low</option>
