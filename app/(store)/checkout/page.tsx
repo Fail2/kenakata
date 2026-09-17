@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "@/store/cart.store";
-import { checkoutSchema, type CheckoutFormData, } from "@/lib/validation";
+import { checkoutSchema, type CheckoutFormData, } from "@/lib/validations";
 import Link from "next/link";
 
 export default function CheckoutPage() {

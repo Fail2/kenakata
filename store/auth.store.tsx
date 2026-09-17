@@ -1,16 +1,12 @@
 "use client";
 
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-} from "react";
+import { createContext, useContext, useEffect, useState, } from "react";
 
 interface AuthContextType {
-    token: string | null;
+    accessToken: string | null;
+    refreshToken: string | null;
     isAuthenticated: boolean;
-    login: (token: string) => void;
+    login: (accessToken: string, refreshToken: string) => void;
     logout: () => void;
 }
 
@@ -21,31 +17,59 @@ export function AuthProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [token, setToken] = useState<string | null>(null);
+    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [refreshToken, setRefreshToken] = useState<string | null>(null);
 
     useEffect(() => {
-        const savedToken = localStorage.getItem("kenakata-token");
+        const savedAccessToken = localStorage.getItem(
+            "kenakata-access-token"
+        );
 
-        if (savedToken) {
-            setToken(savedToken);
+        const savedRefreshToken = localStorage.getItem(
+            "kenakata-refresh-token"
+        );
+
+        if (savedAccessToken) {
+            setAccessToken(savedAccessToken);
+        }
+
+        if (savedRefreshToken) {
+            setRefreshToken(savedRefreshToken);
         }
     }, []);
 
-    function login(newToken: string) {
-        localStorage.setItem("kenakata-token", newToken);
-        setToken(newToken);
+    function login(
+        newAccessToken: string,
+        newRefreshToken: string
+    ) {
+        localStorage.setItem(
+            "kenakata-access-token",
+            newAccessToken
+        );
+
+        localStorage.setItem(
+            "kenakata-refresh-token",
+            newRefreshToken
+        );
+
+        setAccessToken(newAccessToken);
+        setRefreshToken(newRefreshToken);
     }
 
     function logout() {
-        localStorage.removeItem("kenakata-token");
-        setToken(null);
+        localStorage.removeItem("kenakata-access-token");
+        localStorage.removeItem("kenakata-refresh-token");
+
+        setAccessToken(null);
+        setRefreshToken(null);
     }
 
     return (
         <AuthContext.Provider
             value={{
-                token,
-                isAuthenticated: Boolean(token),
+                accessToken,
+                refreshToken,
+                isAuthenticated: Boolean(accessToken),
                 login,
                 logout,
             }}
@@ -59,7 +83,9 @@ export function useAuth() {
     const context = useContext(AuthContext);
 
     if (!context) {
-        throw new Error("useAuth must be used inside AuthProvider");
+        throw new Error(
+            "useAuth must be used inside AuthProvider"
+        );
     }
 
     return context;
